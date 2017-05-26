@@ -34,9 +34,17 @@ def custom_score(game, player):
     float
         The heuristic value of the current game state to the specified player.
     """
-    # TODO: finish this function!
-    raise NotImplementedError
+    """ custom_score heuristic function idea is to implement aggressive heuristic function    
+    """
+    if game.is_loser(player):
+        return float("-inf")
 
+    if game.is_winner(player):
+        return float("inf")
+
+    length_my_player_moves = len(game.get_legal_moves(player))  # Calculate length of myPlayer moves
+    length_opp_payer_moves = len(game.get_legal_moves(game.get_opponent(player)))  # Calculate length of opposite player moves same as custom score 2
+    return float(length_my_player_moves - 1.5*length_opp_payer_moves)
 
 def custom_score_2(game, player):
     """Calculate the heuristic value of a game state from the point of view
@@ -60,9 +68,17 @@ def custom_score_2(game, player):
     float
         The heuristic value of the current game state to the specified player.
     """
-    # TODO: finish this function!
-    raise NotImplementedError
+    """custom_score_2 heuristic function idea is to implement defensive heuristic function
+    """
+    if game.is_loser(player):
+        return float("-inf")
 
+    if game.is_winner(player):
+        return float("inf")
+
+    length_my_moves = len(game.get_legal_moves(player)) # calculated length of available moves for my player
+    length_moves_opponent_player = len(game.get_legal_moves(game.get_opponent(player))) #Calculated length of available moves for opponent player
+    return float(1.5*length_my_moves - length_moves_opponent_player)
 
 def custom_score_3(game, player):
     """Calculate the heuristic value of a game state from the point of view
@@ -86,8 +102,167 @@ def custom_score_3(game, player):
     float
         The heuristic value of the current game state to the specified player.
     """
-    # TODO: finish this function!
-    raise NotImplementedError
+    """custom_score_3 heuristic function aims at maximizing win chances of my agent
+    """
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    length_my_player_moves = 1.0 * len(game.get_legal_moves(player))#Calculate length of available moves for myPlayer
+    length_opp_payer_moves = len(game.get_legal_moves(game.get_opponent(player)))#Calculate length of available moves with oppositePlayer
+
+    if length_my_player_moves == 0:
+        return float("-inf")
+
+    if length_opp_payer_moves == 0:
+        return float("inf")
+
+    return float(length_my_player_moves/length_opp_payer_moves)
+
+def custom_score_4(game, player):
+    """Calculate the heuristic value of a game state from the point of view
+    of the given player.
+
+    Note: this function should be called from within a Player instance as
+    `self.score()` -- you should not need to call this function directly.
+
+    Parameters
+    ----------
+    game : `isolation.Board`
+        An instance of `isolation.Board` encoding the current state of the
+        game (e.g., player locations and blocked cells).
+
+    player : object
+        A player instance in the current game (i.e., an object corresponding to
+        one of the player objects `game.__player_1__` or `game.__player_2__`.)
+
+    Returns
+    -------
+    float
+        The heuristic value of the current game state to the specified player.
+    """
+    """custom_score_4 heuristic function aims at minimizing loosing chances of myPlayer
+    """
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    length_my_player_moves = len(game.get_legal_moves(player)) #Calculate length of available moves for myPlayer
+    length_opp_payer_moves = 1.0 * len(game.get_legal_moves(game.get_opponent(player)))#Calculate length of available moves for the oppositePlayer
+
+    if length_my_player_moves == 0:
+        return float("-inf")
+
+    if length_opp_payer_moves == 0:
+        return float("inf")
+
+    return float(-length_opp_payer_moves/length_my_player_moves)
+
+def custom_score_5(game, player):
+    """Calculate the heuristic value of a game state from the point of view
+    of the given player.
+
+    Note: this function should be called from within a Player instance as
+    `self.score()` -- you should not need to call this function directly.
+
+    Parameters
+    ----------
+    game : `isolation.Board`
+        An instance of `isolation.Board` encoding the current state of the
+        game (e.g., player locations and blocked cells).
+
+    player : object
+        A player instance in the current game (i.e., an object corresponding to
+        one of the player objects `game.__player_1__` or `game.__player_2__`.)
+
+    Returns
+    -------
+    float
+        The heuristic value of the current game state to the specified player.
+    """
+    """custom_score_5 heuristic function defines chances heuristics
+    """
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    length_my_player_moves = len(game.get_legal_moves(player)) #Calculate length of available moves for myPlayer
+    length_opp_payer_moves = len(game.get_legal_moves(game.get_opponent(player)))#Calculate length of available moves for the oppositePlayer
+    return float(length_my_player_moves*length_my_player_moves - length_opp_payer_moves*length_opp_payer_moves)
+
+def custom_score_6(game, player):
+    """Calculate the heuristic value of a game state from the point of view
+    of the given player.
+
+    Note: this function should be called from within a Player instance as
+    `self.score()` -- you should not need to call this function directly.
+
+    Parameters
+    ----------
+    game : `isolation.Board`
+        An instance of `isolation.Board` encoding the current state of the
+        game (e.g., player locations and blocked cells).
+
+    player : object
+        A player instance in the current game (i.e., an object corresponding to
+        one of the player objects `game.__player_1__` or `game.__player_2__`.)
+
+    Returns
+    -------
+    float
+        The heuristic value of the current game state to the specified player.
+    """
+    """custom_score_6 heuristic function aims towards weighted chances heuristics
+    """
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    length_my_player_moves = len(game.get_legal_moves(player)) #Calculate length of available moves for myPlayer
+    length_opp_payer_moves = len(game.get_legal_moves(game.get_opponent(player)))#Calculate length of available moves for the oppositePlayer
+    return float(length_my_player_moves*length_my_player_moves - 1.5*length_opp_payer_moves*length_opp_payer_moves)
+
+def custom_score_7(game, player):
+    """Calculate the heuristic value of a game state from the point of view
+    of the given player.
+
+    Note: this function should be called from within a Player instance as
+    `self.score()` -- you should not need to call this function directly.
+
+    Parameters
+    ----------
+    game : `isolation.Board`
+        An instance of `isolation.Board` encoding the current state of the
+        game (e.g., player locations and blocked cells).
+
+    player : object
+        A player instance in the current game (i.e., an object corresponding to
+        one of the player objects `game.__player_1__` or `game.__player_2__`.)
+
+    Returns
+    -------
+    float
+        The heuristic value of the current game state to the specified player.
+    """
+    """custom_score_7 heuristic function also aims towards weighted chances heuristics
+    """
+    if game.is_loser(player):
+        return float("-inf")
+
+    if game.is_winner(player):
+        return float("inf")
+
+    length_my_player_moves = len(game.get_legal_moves(player)) #Calculate length of available moves for myPlayer
+    length_opp_payer_moves = len(game.get_legal_moves(game.get_opponent(player)))#Calculate length of available moves for the oppositePlayer
+    return float(1.5*length_my_player_moves*length_my_player_moves - length_opp_payer_moves*length_opp_payer_moves)
 
 
 class IsolationPlayer:
@@ -211,9 +386,62 @@ class MinimaxPlayer(IsolationPlayer):
         """
         if self.time_left() < self.TIMER_THRESHOLD:
             raise SearchTimeout()
+        #Fetching legal moves for the active player at max level
+        legal_moves = game.get_legal_moves()
+        #Terminial condition - if there are no legal moves left will call the utility function
+        if not legal_moves:
+            return game.utility(self) #Returning utility function
+        #Assigning default value to best move
+        best_move = legal_moves[0]
+        #Assigning default value to best score as -inf
+        best_score = float('-inf')
+        #for each future legal move of active player
+        for move in legal_moves:
+            #Fetching next state forecast moves
+            next_state = game.forecast_move(move)
+            #Calling min_value function for score - Return type of min_value function is score
+            score = self.min_value(next_state, depth-1)
+            if score > best_score:
+                best_move = move
+                best_score = score
+        return best_move #Return best_move
 
-        # TODO: finish this function!
-        raise NotImplementedError
+    def max_value(self, next_game_state, depth):
+        if self.time_left() < self.TIMER_THRESHOLD:
+            raise SearchTimeout()
+        if depth <= 0:
+            return self.score(next_game_state, self)
+        legal_moves = next_game_state.get_legal_moves()
+        if not legal_moves:
+            return next_game_state.utility(self)
+        #Initialize best score as -inf for maximize function
+        best_score = float('-inf')
+        for move in legal_moves:
+            next_state = next_game_state.forecast_move(move)
+            #Calculating best score as maximum score out of best_score i.e. -inf and score returned from minimizing function
+            best_score = max([best_score, self.min_value(next_state, depth - 1)])
+        return best_score
+
+
+    def min_value(self, next_game_state, depth):
+        if self.time_left() < self.TIMER_THRESHOLD:
+            raise SearchTimeout()
+        #Return score if the defined depth==0
+        if depth <= 0:
+            return self.score(next_game_state, self)
+        legal_moves = next_game_state.get_legal_moves()
+        if not legal_moves:
+            return next_game_state.utility(self)
+        #Initialize best score to be 'inf' for minimize function
+        #Only point of initializing best score as +inf as we have to take score which is less than +inf
+        #for minizing function -- Basic requirement
+        best_score = float('inf')
+        for move in legal_moves:
+            next_state = next_game_state.forecast_move(move)
+            #Calculating best score as minimum score out of best_score i.e. +inf and score returned from maximizing function
+            best_score = min([best_score, self.max_value(next_state, depth - 1)])
+
+        return best_score
 
 
 class AlphaBetaPlayer(IsolationPlayer):
@@ -252,10 +480,31 @@ class AlphaBetaPlayer(IsolationPlayer):
             Board coordinates corresponding to a legal move; may return
             (-1, -1) if there are no available legal moves.
         """
-        self.time_left = time_left
 
-        # TODO: finish this function!
-        raise NotImplementedError
+        self.time_left = time_left
+        legal_moves = game.get_legal_moves()
+        if not legal_moves:
+            return (-1, -1)
+
+
+        # Initialize the best move so that this function returns something
+        # in case the search fails due to timeout
+        best_score = float("-inf")
+        best_move = legal_moves[0]
+
+        try:
+            # The try/except block will automatically catch the exception
+            # raised when the timer is about to expire.
+            self.search_depth = 1
+            while best_score is not float("inf"):
+                best_move = self.alphabeta(game, self.search_depth, alpha=float("-inf"), beta=float("inf"))
+                self.search_depth += 1
+        except SearchTimeout:
+            return best_move
+            pass  # Handle any actions required after timeout as needed
+
+        # Return the best move from the last completed search iteration
+        return best_move
 
     def alphabeta(self, game, depth, alpha=float("-inf"), beta=float("inf")):
         """Implement depth-limited minimax search with alpha-beta pruning as
@@ -298,12 +547,63 @@ class AlphaBetaPlayer(IsolationPlayer):
                 function directly.
 
             (2) If you use any helper functions (e.g., as shown in the AIMA
-                pseudocode) then you must copy the timer check into the top of
+                pseudocode) then you must copy the timer check into the top of <-- Nishant to take care of this one
                 each helper function or else your agent will timeout during
                 testing.
         """
         if self.time_left() < self.TIMER_THRESHOLD:
             raise SearchTimeout()
 
-        # TODO: finish this function!
-        raise NotImplementedError
+        #Get Legal moves for active player
+        legal_moves = game.get_legal_moves()
+        #if there are no remaining legal moves available - Terminal state return utility function
+        if not legal_moves:
+            return game.utility(self)
+        #initialize best score as -inf - this needs to be used as alpha as well
+        best_score = float("-inf")
+        #Initialize best move as None
+        best_move = None
+        for move in legal_moves:
+            next_state = game.forecast_move(move)
+            #minimum value function called with input values as game state, depth, score and beta--> inf
+            score = self.min_value(next_state, depth-1, best_score, beta)
+            if score > best_score: #compare the returned score with best_score
+                best_score = score #assign the score as a best score if score is greater than best_score
+                best_move = move #assign same move as a best_move - for which score is the best_score
+        return best_move #Return best move from alphabeta function
+
+    def min_value(self, next_game_state, depth, alpha, beta):
+
+        if self.time_left() < self.TIMER_THRESHOLD:
+            raise SearchTimeout()
+        if depth <= 0: #Calling score function in case depth ==0
+            return self.score(next_game_state, self)
+        legal_moves = next_game_state.get_legal_moves()
+        if not legal_moves:
+            return next_game_state.utility(self)
+        score = float("inf") #default value of score is defined as +inf in case of minimizing function
+        for move in legal_moves:
+            next_state = next_game_state.forecast_move(move)
+            score = min(score, self.max_value(next_state, depth-1, alpha, beta))
+            if score <= alpha: #This condition is written in order to prune if possible
+                return score
+            beta = min(beta, score)#Assign beta as minimum value out of beta and score returned from maximizing function
+        return score
+
+    def max_value(self, next_game_state, depth, alpha, beta):
+
+        if self.time_left() < self.TIMER_THRESHOLD:
+            raise SearchTimeout()
+        if depth <= 0:
+            return self.score(next_game_state, self)
+        legal_moves = next_game_state.get_legal_moves()
+        if not legal_moves:
+            return next_game_state.utility(self)
+        score = float("-inf") #initialized default score as -inf in case of maximizing function
+        for move in legal_moves:
+            next_state = next_game_state.forecast_move(move)
+            score = max(score, self.min_value(next_state, depth -1, alpha, beta))
+            if score >= beta: #Prune if possible
+                return score
+            alpha = max(alpha, score) #assign alpha as max of alpha or score(max) returned from minimizing function
+        return score
